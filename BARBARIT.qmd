@@ -190,3 +190,13 @@ dragon_grades |>
   knitr::kable()
 ```
 
+```{r, message=FALSE, warning=FALSE}
+dragon_grades |>
+  group_by(`number of grades in Dragon Lore and Taming`) |>
+  summarise(`number of students`=n()) |>
+  ggplot(aes(x = `number of grades in Dragon Lore and Taming`, y = `number of students`)) +
+  geom_col() +
+  labs(title = "Number of Students by Count of Dragon Lore Grades")+
+  theme_minimal()
+```
+
