@@ -83,7 +83,7 @@ students |>
 library(lubridate)
 
 students |>
-  mutate(age = time_length(today() - birth_date, unit="year")) |>
+  mutate(age = round(time_length(today() - birth_date, unit="year"))) |>
   ggplot(aes(x = age)) +
   geom_histogram(bins = 20) +
   theme_minimal()+
@@ -95,6 +95,17 @@ students |>
   mutate(age = round(time_length(today() - birth_date, "year"))) |>
   group_by(group) |>
   summarise(median_age = median(age))|>
+  knitr::kable()
+```
+
+```{r, message=FALSE, warning=FALSE}
+students |>
+  mutate(age = round(time_length(today() - birth_date, "year"))) |>
+  group_by(group) |>
+  slice_max(age) |>
+  ungroup() |>
+  arrange(desc(age)) |>
+  select(id, sex, age, group) |>
   knitr::kable()
 ```
 
