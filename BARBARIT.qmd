@@ -358,5 +358,32 @@ passes |>
   theme_minimal()
 ```
 
+```{r, message=FALSE, warning=FALSE}
+avg_course |>
+  pivot_longer(
+    cols = where(is.numeric) & !c(id) & !c(group),
+    names_to = "course",
+    values_to = "avg"
+  ) |>
+  filter(avg < 5) |>
+  count(course) |>
+  arrange(desc(n)) |>
+  knitr::kable()
+```
 
+The course that is the most responsible of student failure owing to grades below than 5 is Runecrafting and Glyphwork.
+
+
+```{r}
+passes |>
+  left_join(students, by = "id") |>
+  mutate(age = round(time_length(today() - birth_date, "year"))) |>
+  group_by(age) |>
+  summarise(pass_rate = mean(pass)) |>
+  ggplot(aes(x = age, y = pass_rate)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Success Rate as a Function of Age")+
+  theme_minimal()
+```
 
