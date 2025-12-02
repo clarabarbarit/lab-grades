@@ -200,3 +200,11 @@ dragon_grades |>
   theme_minimal()
 ```
 
+```{r, message=FALSE, warning=FALSE}
+dragon_grades |>
+  ggplot(aes(x = group, y = `number of grades in Dragon Lore and Taming`)) +
+  geom_violin() +
+  labs(title = "Dragon Lore Grades per Student by Group")+
+  theme_minimal()
+```
+
