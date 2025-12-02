@@ -143,4 +143,26 @@ grades |>
        title = "Grade Distributions by Module")
 ```
 
+```{r, message=FALSE, warning=FALSE}
+grades_per_student <- grades |>
+  filter(!is.na(grade)) |>
+  group_by(id) |>
+  summarise(`number of grades`=n()) |>
+  left_join(students, by = "id")
+
+grades_per_student |>
+  slice_head(n = 5) |>
+  knitr::kable()
+
+grades_per_student |>
+  summarise(
+    `min nb of grades` = min(`number of grades`),
+    `max nb of grades` = max(`number of grades`),
+    `avg nb of grades` = round(mean(`number of grades`)),
+    `median nb of grades` = median(`number of grades`)
+  ) |>
+  knitr::kable()
+```
+
+
 
