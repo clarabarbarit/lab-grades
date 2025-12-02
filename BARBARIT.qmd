@@ -183,7 +183,7 @@ dragon_grades <- grades |>
   group_by(id) |>
   summarise(`number of grades in Dragon Lore and Taming`=n()) |>
   left_join(students, by = "id") |>
-  select(id, group, `number of grades in Dragon Lore and Taming`)
+  select(id, group, `number of grades in Dragon Lore and Taming`, sex)
 
 dragon_grades |>
   slice_head(n = 5) |>
@@ -205,6 +205,14 @@ dragon_grades |>
   ggplot(aes(x = group, y = `number of grades in Dragon Lore and Taming`)) +
   geom_violin() +
   labs(title = "Dragon Lore Grades per Student by Group")+
+  theme_minimal()
+```
+
+```{r, message=FALSE, warning=FALSE}
+dragon_grades |>
+  ggplot(aes(x = group, y = `number of grades in Dragon Lore and Taming`, fill = sex)) +
+  geom_violin() +
+  labs(title = "Dragon Lore Grades by Group and Sex")+
   theme_minimal()
 ```
 
