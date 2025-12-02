@@ -302,4 +302,12 @@ final_grades |>
   knitr::kable()
 ```
 
+```{r}
+final_grades |>
+  ggplot(aes(x = group, y = final)) +
+  geom_violin() +
+  labs(title = "Final Grades by Group")+
+  theme_minimal()
+```
+
 
