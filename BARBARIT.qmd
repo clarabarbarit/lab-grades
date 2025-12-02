@@ -245,4 +245,15 @@ avg_course |>
   knitr::kable()
 ```
 
+```{r, message=FALSE, warning=FALSE}
+avg_course |>
+  ggplot(aes(
+    x = `Ancient Magic and Mysticism`,
+    y = `Illusion and Enchantment`
+  )) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(se = FALSE) +
+  labs(title = "Relationship Between Ancient Magic and Illusion Grades")
+```
+
 
