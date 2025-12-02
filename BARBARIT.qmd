@@ -109,10 +109,28 @@ students |>
   knitr::kable()
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 n_grades <- grades |>
   filter(!is.na(grade)) |>
   nrow()
 ```
 
 The data set contains `r n_grades` grades.
+
+```{r,message=FALSE, warning=FALSE}
+sword_id <- courses |>
+  filter(course == "Swordsmanship and Martial Arts") |>
+  pull(course_id)
+
+grades |>
+  filter(course_id == sword_id) |>
+  left_join(students, by = "id") |>
+  group_by(group) |>
+  summarise(avg_grade = mean(grade, na.rm = TRUE)) |>
+  ggplot(aes(x = group, y = avg_grade)) +
+  geom_col() +
+  theme_minimal()+
+  labs(title = "Average Swordsmanship Grades per Group")
+```
+
+
