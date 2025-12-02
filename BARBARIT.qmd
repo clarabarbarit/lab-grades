@@ -15,3 +15,17 @@ library(vroom)
 ```{r}
 courses <- vroom(here("data","courses.csv"))
 ```
+
+
+```{r}
+courses |>
+  rename(
+    "course name" = course,
+    "identifier" = course_id,
+    "module" = module,
+    "number of exams" = nb_grades
+  ) |>
+  arrange(`course name`) |>
+  knitr::kable()
+```
+
