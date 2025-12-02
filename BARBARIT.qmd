@@ -289,5 +289,17 @@ avg_course |>
   labs(title = paste("Relationship in Group", best_group))
 ```
 
+```{r}
+final_grades <- avg_course |>
+  mutate(
+    final = rowMeans(across(where(is.numeric) & !c(id) & !c(group)), na.rm = TRUE)
+  ) |>
+  select(id, group, sex, final) |>
+  arrange(desc(final))
+
+final_grades |>
+  slice_head(n = 5) |>
+  knitr::kable()
+```
 
 
