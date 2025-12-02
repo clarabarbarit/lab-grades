@@ -133,4 +133,14 @@ grades |>
   labs(title = "Average Swordsmanship Grades per Group")
 ```
 
+```{r, message=FALSE, warning=FALSE}
+grades |>
+  filter(!is.na(grade)) |>
+  left_join(courses, by = "course_id") |>
+  ggplot(aes(x = grade, fill = factor(module))) +
+  geom_histogram(position = "identity", alpha = 0.5, binwidth = 1) +
+  labs(fill = "Module",
+       title = "Grade Distributions by Module")
+```
+
 
