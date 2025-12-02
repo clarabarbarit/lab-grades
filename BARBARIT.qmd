@@ -256,7 +256,7 @@ avg_course |>
   labs(title = "Relationship Between Ancient Magic and Illusion Grades")
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 avg_group <- avg_course |>
   select(-group) |>
   left_join(students |> select(id, group), by = "id") |>
@@ -270,5 +270,24 @@ avg_group <- avg_course |>
 avg_group |>
   knitr::kable()
 ```
+
+```{r, message=FALSE, warning=FALSE}
+best_group <- avg_group |>
+  slice_max(abs(corr)) |>
+  pull(group)
+
+avg_course |>
+  select(-group) |>
+  left_join(students |> select(id, group), by = "id") |>
+  filter(group == best_group) |>
+  ggplot(aes(
+    x = `Illusion and Enchantment`,
+    y = `Necromancy and Spirit Summoning`
+  )) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  labs(title = paste("Relationship in Group", best_group))
+```
+
 
 
