@@ -256,4 +256,19 @@ avg_course |>
   labs(title = "Relationship Between Ancient Magic and Illusion Grades")
 ```
 
+```{r}
+avg_group <- avg_course |>
+  select(-group) |>
+  left_join(students |> select(id, group), by = "id") |>
+  group_by(group) |>
+  summarise(
+    corr = cor(`Necromancy and Spirit Summoning`,
+               `Illusion and Enchantment`,
+               use = "complete.obs")
+  )
+
+avg_group |>
+  knitr::kable()
+```
+
 
