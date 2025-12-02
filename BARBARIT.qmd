@@ -318,4 +318,31 @@ final_grades |>
   theme_minimal()
 ```
 
+```{r, message=FALSE, warning=FALSE}
+passes <- avg_course |>
+  pivot_longer(
+    cols = where(is.numeric) & !c(id) & !c(group),
+    names_to = "course",
+    values_to = "avg_by_course"
+  ) |>
+  left_join(courses |> select(course, module), by = "course") |>
+  group_by(id, group, sex) |>
+  summarise(
+    min_course_avg = min(avg_by_course, na.rm = TRUE),
+    module1 = mean(avg_by_course[module == 1], na.rm = TRUE),
+    module2 = mean(avg_by_course[module == 2], na.rm = TRUE),
+    pass = (min_course_avg >= 5 &
+            module1 >= 10 &
+            module2 >= 10),
+    .groups = "drop"
+  )
+```
+
+```{r, message=FALSE, warning=FALSE}
+passes |>
+  left_join(final_grades, by = "id") |>
+  filter(!pass & final >= 10) |>
+  nrow()
+```
+
 
