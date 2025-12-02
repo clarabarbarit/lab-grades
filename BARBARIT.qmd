@@ -109,4 +109,10 @@ students |>
   knitr::kable()
 ```
 
+```{r}
+n_grades <- grades |>
+  filter(!is.na(grade)) |>
+  nrow()
+```
 
+The data set contains `r n_grades` grades.
