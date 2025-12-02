@@ -29,3 +29,16 @@ courses |>
   knitr::kable()
 ```
 
+```{r}
+students <- vroom(here("data","students.csv"),
+                  col_types = cols(
+                       id = col_integer(),
+                       group = col_factor(),
+                       birth_date = col_date(),
+                       sex = col_factor()
+                     ))
+```
+
+The birth_date column of the students data frame is of class `r class(students$birth_date)`
+
+The sex column of the students data frame is of class `r class(students$sex)`
