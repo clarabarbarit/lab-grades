@@ -173,4 +173,20 @@ grades_per_student |>
   facet_wrap(~sex)
 ```
 
+```{r, message=FALSE, warning=FALSE}
+dragon_id <- courses |>
+  filter(course == "Dragon Lore and Taming") |>
+  pull(course_id)
+
+dragon_grades <- grades |>
+  filter(course_id == dragon_id) |>
+  group_by(id) |>
+  summarise(`number of grades in Dragon Lore and Taming`=n()) |>
+  left_join(students, by = "id") |>
+  select(id, group, `number of grades in Dragon Lore and Taming`)
+
+dragon_grades |>
+  slice_head(n = 5) |>
+  knitr::kable()
+```
 
