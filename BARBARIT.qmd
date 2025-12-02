@@ -79,3 +79,14 @@ students |>
        y = "Proportion")
 ```
 
+```{r, message=FALSE, warning=FALSE}
+library(lubridate)
+
+students |>
+  mutate(age = time_length(today() - birth_date, unit="year")) |>
+  ggplot(aes(x = age)) +
+  geom_histogram(bins = 20) +
+  theme_minimal()+
+  labs(title = "Distribution of Student Ages")
+```
+
