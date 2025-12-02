@@ -3,7 +3,7 @@ title: "BARBARIT"
 format: html
 ---
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 here::i_am("lab-grades.Rproj")
 library(here)
 library(tidyr)
@@ -12,12 +12,12 @@ library(dplyr)
 library(vroom)
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 courses <- vroom(here("data","courses.csv"))
 ```
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 courses |>
   rename(
     "course name" = course,
@@ -29,7 +29,7 @@ courses |>
   knitr::kable()
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 students <- vroom(here("data","students.csv"),
                   col_types = cols(
                        id = col_integer(),
@@ -44,7 +44,7 @@ The birth_date column of the students data frame is of class `r class(students$b
 The sex column of the students data frame is of class `r class(students$sex)`
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(readr)
 
 grades <- read_delim(here("Data", "grades.csv"),
@@ -57,4 +57,16 @@ grades <- read_delim(here("Data", "grades.csv"),
   )
 )
 ```
+
+```{r, message=FALSE, warning=FALSE}
+students |> 
+  group_by(group) |>
+  summarise(n = n())|>
+  ggplot(aes(x = group, y = n)) +
+  geom_col() +
+  theme_minimal()+
+  labs(title = "Number of Students per Group",
+       y = "Count")
+```
+
 
