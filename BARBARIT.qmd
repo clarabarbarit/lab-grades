@@ -345,4 +345,18 @@ passes |>
   nrow()
 ```
 
+```{r, message=FALSE, warning=FALSE}
+passes |>
+  group_by(group, pass) |>
+  summarise(n=n()) |>
+  group_by(group) |>
+  mutate(prop = n / sum(n)) |>
+  filter(pass == TRUE) |>
+  ggplot(aes(x = group, y = prop)) +
+  geom_col() +
+  labs(title = "Pass Rate per Group")+
+  theme_minimal()
+```
+
+
 
