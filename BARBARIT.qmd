@@ -69,4 +69,13 @@ students |>
        y = "Count")
 ```
 
+```{r, message=FALSE, warning=FALSE}
+students |>
+  group_by(group, sex) |>
+  summarise(n = n(), .groups = "drop") |>
+  ggplot(aes(x = group, y = n, fill = sex)) +
+  geom_col(position = "fill") +
+  labs(title = "Gender Balance per Group",
+       y = "Proportion")
+```
 
