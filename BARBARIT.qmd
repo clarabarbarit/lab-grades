@@ -289,7 +289,7 @@ avg_course |>
   labs(title = paste("Relationship in Group", best_group))
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 final_grades <- avg_course |>
   mutate(
     final = rowMeans(across(where(is.numeric) & !c(id) & !c(group)), na.rm = TRUE)
@@ -302,11 +302,19 @@ final_grades |>
   knitr::kable()
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 final_grades |>
   ggplot(aes(x = group, y = final)) +
   geom_violin() +
   labs(title = "Final Grades by Group")+
+  theme_minimal()
+```
+
+```{r, message=FALSE, warning=FALSE}
+final_grades |>
+  ggplot(aes(x = group, y = final, fill = sex)) +
+  geom_violin() +
+  labs(title = "Final Grades by Group and Sex")+
   theme_minimal()
 ```
 
