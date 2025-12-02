@@ -216,3 +216,33 @@ dragon_grades |>
   theme_minimal()
 ```
 
+```{r, message=FALSE, warning=FALSE}
+avg_course_long <- grades |>
+  filter(!is.na(grade)) |>
+  group_by(id, course_id) |>
+  summarise(avg_grade = round(mean(grade), 2), .groups = "drop") |>
+  left_join(courses, by = "course_id") |>
+  select(id, course, avg_grade)
+
+avg_course <- avg_course_long |>
+  pivot_wider(
+    names_from = course,
+    values_from = avg_grade
+  )
+
+avg_course <- students |>
+  select(id, any_of("group"), everything()) |>
+  right_join(avg_course, by = "id")
+
+avg_course |>
+  select(
+    id,
+    any_of("group"),
+    `Ancient Magic and Mysticism`,
+    `Celestial Navigation and Astronomy`
+  ) |>
+  slice_head(n = 5) |>
+  knitr::kable()
+```
+
+
